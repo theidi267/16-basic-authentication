@@ -16,10 +16,7 @@ export default (req, res, next) => {
   };
 
   let getAuth = () => {
-    // Force an error for non-www requests
-    // next('Invalid User ID or Password');
 
-    // Force a login pop-up on www requests
     res.set({
       'WWW-Authenticate': 'Basic realm="protected secret stuff"',
     }).send(401);
@@ -30,7 +27,6 @@ export default (req, res, next) => {
     let authHeader = req.headers.authorization;
 
     if ( ! authHeader ) {
-      // throw 'Authentication Required';
       getAuth();
     }
 
