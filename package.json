@@ -7,7 +7,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "dbon": "mongod --dbpath=/Users/timeaheidenreich/codefellows/401/mongo_db",
+    "dbon": "mkdir -p ./db && mongod --dbpath ./db",
+    "dboff": "killall mongod",
     "start": "node index.js",
     "lint": "eslint **/*.js",
     "test": "jest --verbose --coverage",
