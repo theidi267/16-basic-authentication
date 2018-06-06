@@ -1,7 +1,7 @@
 ![CF](https://camo.githubusercontent.com/70edab54bba80edb7493cad3135e9606781cbb6b/687474703a2f2f692e696d6775722e636f6d2f377635415363382e706e67) 16: Basic Auth
 ===
 
-[![Build Status](https://travis-ci.com/theidi267/16-basic-authentication.svg?branch=master)](https://travis-ci.com/theidi267/16-basic-authentication.svg?branch=master)
+[![Build Status](https://travis-ci.com/theidi267/16-basic-authentication.svg?branch=master)](https://travis-ci.com/theidi267/16-basic-authentication)
 
 * **Git Hub Repo:** [https://github.com/theidi267/16-basic-authentication](https://github.com/theidi267/16-basic-authentication)
 * **Heroku App:** [https://basic-authentication-16.herokuapp.com/](https://basic-authentication-16.herokuapp.com/)
