@@ -8,23 +8,40 @@ const userSchema = new mongoose.Schema ({
   username: {type: String, required: true, unique: true},
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},  
-  // findHash: {type: String, unique: true},
+  pets: [{type: mongoose.Schema.Types.ObjectId, ref: 'petrobots'}],
 });
 
 userSchema.pre('save', function(next) {
-  this.password = bcrypt.hashSync(this.password,10);
+  bcrypt.hash(this.password,10)
+    .then(hashedPassword => {
+      this.password = hashedPassword;
+      next();
+    })
+    .catch(err => {
+      throw err;
+    });  
+});
+
+userSchema.pre('findOne', function(next) {
+  this.populate('pets');
   next();
 });
 
 userSchema.statics.authenticate = function(auth) {
   let query = {username:auth.username};
-  if (auth.token) {
-    let token = jwt.verify(auth.token, process.env.SECRET || 'changethis');
-    query = {_id:token.id};
-  }
   return this.findOne(query)
-    .then(user => user.comparePassword(auth.password))
-    .catch(error => error);
+    .then(user =>  user && user.comparePassword(auth.password))
+    .catch(err => err);
+};
+
+userSchema.statics.authorize = function(token){
+  let parsedToken = jwt.verify(token, process.env.SECRET || 'changethis');
+  let query = {_id:parsedToken.id};
+  return this.findOne(query)
+    .then(user => {
+      return user;
+    })
+    .catch(err => err);
 };
 
 userSchema.methods.comparePassword = function(password) {
@@ -33,7 +50,7 @@ userSchema.methods.comparePassword = function(password) {
 };
 
 userSchema.methods.generateToken = function() {
-  return jwt.sign({id: this.id}, process.env.SECRET || 'changethis');
+  return jwt.sign({id: this._id}, process.env.SECRET || 'changethis');
 };
 
 export default mongoose.model('users', userSchema);
