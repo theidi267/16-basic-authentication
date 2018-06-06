@@ -14,17 +14,41 @@ authRouter.post('/signup', (req,res,next) => {
     .catch(next);
 });
 
-authRouter.get('/signin', auth, (req,res,next) => { //eslint-disable-line 
-  console.log(req.user); 
-  res.send(req.user.generateToken());  
+authRouter.get('/signin', auth, (req, res, next) => { //eslint-disable-line 
+  res.cookie('Token', req.token);
+  res.send(req.token); 
+});
+
+authRouter.get('/api/v1/users', auth, (req, res, next) => {
+  User.find({})
+    .then(data => sendJSON(res, data))
+    .catch(next);
+});
+
+authRouter.get('/api/v1/users/:id', auth, (req, res, next) => {
+  User.findOne({ _id: req.params.id })
+    .then(data => sendJSON(res, data))
+    .catch(next);
 });
 
 authRouter.post('/api/petrobots', auth, (req,res,next) => { //eslint-disable-line
   let pet = new Petrobot (req.body);
-  console.log(pet);
   pet.save()
     .then(data => sendJSON(res,data))
     .catch(next);  
+});
+
+
+authRouter.get('/api/v1/petrobots', auth, (req, res, next) => {
+  Petrobot.find({})
+    .then(data => sendJSON(res, data))
+    .catch(next);
+});
+
+authRouter.get('/api/v1/petrobots/:id', auth, (req, res, next) => {
+  Petrobot.findOne({ _id: req.params.id })
+    .then(data => sendJSON(res, data))
+    .catch(next);
 });
 
 let sendJSON = (res,data) => {
