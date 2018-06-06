@@ -24,6 +24,14 @@ This api supports a mongoose 'user' model that is represented by the following:
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
 });```
+
+This api supports a mongoose 'petrobot' model that is represented by the following:
+```name: { type:String, required:true },
+  species: { type:String, uppercase:true, required:true},
+  legs: { type:Number, default:'4'},
+  skills: { type:String, uppercase:true, default:'PURR'},
+  userid: {type:mongoose.Schema.Types.ObjectId, ref:'users'},
+});```
 *The User Model also has `authenticate()`, `comparePassword()` and `generateToken()` methods*
 
 ## Server Endpoints

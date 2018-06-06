@@ -5,7 +5,7 @@ import Users from '../auth/model.js';
 
 const petrobotSchema = mongoose.Schema({
   name: { type:String, required:true },
-  species: { type:String, uppercase:true, required:true },
+  species: { type:String, uppercase:true, required:true},
   legs: { type:Number, default:'4'},
   skills: { type:String, uppercase:true, default:'PURR'},
   userid: {type:mongoose.Schema.Types.ObjectId, ref:'users'},
